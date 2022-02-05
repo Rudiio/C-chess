@@ -102,6 +102,22 @@ void Init_board(Case tab[N][N])
     (tab[7][4]).color=BLANC;
 }
 
+void Copy_tab(Case tab[N][N], Case copy[N][N])
+{
+    /*Copie le tableau tab dans copy */
+    //déclaration des variables
+    int i;
+    int j;
+
+    for (i=0;i<N; i++){
+        for(j=0;j<N;j++){
+            copy[i][j].piece =tab[i][j].piece;
+            copy[i][j].color =tab[i][j].color;
+
+        }
+    }
+}
+
 void print_tab(Case tab[N][N])
 {
     /*Affiche le tableau*/

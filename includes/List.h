@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
 
+#include "ListArray.h"
+
 typedef struct List_ List;
 
 struct List_{
@@ -28,5 +30,8 @@ int Est_dans_list(List *coups,int x, int y);
 
 //fonction de suppression
 List *Supprime_elem(List *coups, int x, int y);
+
+//fonctions de meilleur coups
+void meilleurs_IA(List *coups,Case tab[N][N],int *mx,int *my,int *x,int *y,int xpos,int ypos);
 
 #endif

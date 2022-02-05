@@ -29,6 +29,9 @@ void move(Case tab[N][N],int actual_x, int actual_y, int new_x,int new_y);
 //fonction d'ajout dans le cimetière
 void Ajout_mortes(Case mortes[N][N],int type, int color);
 
+//fonction de copie de tab
+void Copy_tab(Case tab[N][N], Case copy[N][N]);
+
 
 
 #endif

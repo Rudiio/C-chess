@@ -57,9 +57,9 @@ void creer_fenetre(SDL_Window **window, SDL_Renderer **renderer)
 		exit(EXIT_FAILURE);
 	}
 
-    //Coloriage du fond
-	SDL_SetRenderDrawColor(*renderer, 255, 255, 250, 255); 
-	SDL_RenderClear(*renderer);
+    // //Coloriage du fond
+	// SDL_SetRenderDrawColor(*renderer, 255, 255, 250, 255); 
+	// SDL_RenderClear(*renderer);
 
 }
 
@@ -192,6 +192,62 @@ void Case_Jaune(SDL_Renderer **renderer, int SDL_x, int SDL_y)
 
 	SDL_DestroyTexture(texture);
 
+}
+
+void Case_selectionnee(SDL_Renderer **renderer, int SDL_x, int SDL_y)
+{
+	/* Colorie une case en jaune transparent (pour les cases compatibles) */
+
+	//Le rectangle sur lequel on mettra la texture
+	SDL_Rect rect ={0,0, CASE_SIZE-CONTOUR, CASE_SIZE-CONTOUR };
+	SDL_Texture *texture=NULL;
+
+	texture = SDL_CreateTexture(*renderer, SDL_PIXELFORMAT_RGBA8888,SDL_TEXTUREACCESS_TARGET, CASE_SIZE-CONTOUR, CASE_SIZE-CONTOUR);
+	//On vérifie si la texture a bien été chargée
+	if(texture == NULL)
+    {
+        SDL_Log("ERREUR: Creation de tmp echouee > %s\n",SDL_GetError());
+	    exit(EXIT_FAILURE);
+    }
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND); //Transparence
+	SDL_SetRenderDrawColor(*renderer, 154, 205, 50, 200); //On peint en jaune
+	SDL_SetRenderTarget(*renderer, texture); /* On va dessiner sur la texture */
+	SDL_RenderFillRect(*renderer, &rect);
+	SDL_SetRenderTarget(*renderer, NULL);
+
+	SDL_Rect rect2 ={DY + SDL_y*CASE_SIZE+CONTOUR,DX + SDL_x*CASE_SIZE +CONTOUR , CASE_SIZE-2*CONTOUR , CASE_SIZE-2*CONTOUR};
+	SDL_RenderCopy(*renderer, texture, NULL, &rect2);
+
+	SDL_DestroyTexture(texture);
+
+}
+
+void menu(SDL_Renderer **renderer)
+{
+	/*Affiche le menu du jeu */
+
+	//chargement de la texture
+	SDL_Texture *logo=charge_texture("textures/logo.bmp",renderer);
+	
+	SDL_Rect dst = {WIDTH/3 -CASE_SIZE/2, DY, CASE_SIZE+ WIDTH/3,400 };
+    SDL_RenderCopy(*renderer, logo, NULL, &dst);
+
+	SDL_DestroyTexture(logo);
+
+	SDL_Texture *bouton_1P=charge_texture("textures/button_1p.bmp",renderer);
+	SDL_Texture *bouton_2P=charge_texture("textures/button_2p.bmp",renderer);
+	SDL_Texture *bouton_quit=charge_texture("textures/button_quit.bmp",renderer);
+
+	SDL_Rect dst1={WIDTH/4 - CASE_SIZE ,CASE_SIZE*6,CASE_SIZE*2, CASE_SIZE};
+	SDL_Rect dst2={2*WIDTH/4 - CASE_SIZE, CASE_SIZE*6,CASE_SIZE*2,CASE_SIZE};
+	SDL_Rect dst3={3*WIDTH/4 - CASE_SIZE ,CASE_SIZE*6,CASE_SIZE*2,CASE_SIZE};
+
+	SDL_RenderCopy(*renderer, bouton_1P, NULL, &dst1);
+	SDL_DestroyTexture(bouton_1P);
+	SDL_RenderCopy(*renderer, bouton_2P, NULL, &dst2);
+	SDL_DestroyTexture(bouton_2P);
+	SDL_RenderCopy(*renderer, bouton_quit, NULL, &dst3);
+	SDL_DestroyTexture(bouton_quit);
 }
 
 void Detruire_fenetre(SDL_Window **window,SDL_Renderer **renderer)

@@ -5,6 +5,8 @@
 
 #include "List.h"
 
+#define N 8
+
 
 List* Ajout_liste(List* coups,int x, int y)
 {
@@ -92,6 +94,9 @@ int Est_dans_list(List *coups,int x, int y)
     //déclaration des variables
     List *cur =coups;
 
+    if(coups==NULL){
+        return 0;
+    }
     while(cur){
         if(cur->x==x && cur->y==y)
             return 1;
@@ -104,26 +109,57 @@ int Est_dans_list(List *coups,int x, int y)
 List *Supprime_elem(List *coups, int x, int y)
 {
     /* Supprime l'élément de la liste coups contenant x et y */
+    // printf("x**%d y**%d\n",x,y);
 
     //déclaration des variables
     List *cur=coups;
     List *prec=coups;
-    
+    // printf("affiche liste debut dans supprime elemc\n");
+    // Affiche_liste(coups);
+
     if(coups->x==x && coups->y==y){
+    // printf("affiche liste premier elem dans supprime elemc\n");
+    // Affiche_liste(coups);
         prec=coups->suivant;
         free(coups);
+        // printf("affiche liste premier elem freee dans supprime elemc\n");
+        // Affiche_liste(prec);
         return prec;
     }
-
+    cur=coups->suivant;
     while(cur && cur->x!=x && cur->y!=y){
         prec=cur;
         cur=cur->suivant;
     }
+    // printf("affiche liste boucle dans supprime elemc\n");
+    // Affiche_liste(coups);
+
+    // printf("affiche liste prec dans supprime elemc\n");
+    // Affiche_liste(prec);
+    // printf("affiche liste cur dans supprime elemc\n");
+    // Affiche_liste(cur);
     prec->suivant=cur->suivant;
     free(cur);
 
+    // printf("affiche liste boucle free dans supprime elemc\n");
+    // Affiche_liste(coups);
     return coups;
 
 }
 
+void meilleurs_IA(List *coups,Case tab[N][N],int *mx,int *my,int *x,int *y,int xpos,int ypos)
+{
+    /*Renvoie le meilleur coup de la liste de coups */
+    //déclaration des variables
+    List *cur=coups;
+    while(cur){
+        if(tab[cur->x][cur->y].piece>tab[*mx][*my].piece){
+            *mx=cur->x;
+            *my=cur->y;
+            *x=xpos;
+            *y=ypos;
+        }
+        cur=cur->suivant;
+    }
 
+}

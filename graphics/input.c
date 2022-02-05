@@ -62,3 +62,36 @@ int mouse(int *x, int *y)
     }
 
 }
+
+int mouse2(int *x, int *y)
+{
+    /* Prend en charge les clics de la souris et renvoie la position du clic en pixels */
+    SDL_Event event;
+
+    while(1){
+        //Attente d'un évènement
+        SDL_WaitEvent(&event);
+
+        switch(event.type){     //choix multiple
+            case SDL_QUIT:
+                return -1;
+
+            case SDL_MOUSEBUTTONDOWN:       //Un bouton de la souris est préssée
+                
+                //Positions de la souris
+				*x=event.button.x;
+				*y=event.button.y;
+                return 1;
+
+                
+
+                return -1;
+            case SDL_KEYDOWN :
+                switch(event.key.keysym.sym){
+                    case SDLK_ESCAPE:
+                    return -1;
+                }
+        }
+    }
+
+}

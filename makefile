@@ -1,4 +1,4 @@
-CFLAGS = -Wall
+CFLAGS = -std=c11 -Wall -ggdb3
 CC = gcc
 EXEC = chess
 INCFLAGS = -I/includes
