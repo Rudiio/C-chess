@@ -43,5 +43,5 @@ clean :	clean_OBJ
 	rm -f $(EXEC)
 
 clean_OBJ :
-	rm -f OBJ/*.O
+	rm -f OBJ/*.o
 
