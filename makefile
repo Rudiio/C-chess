@@ -1,35 +1,47 @@
-CFLAGS = -std=c11 -Wall -ggdb3
 CC = gcc
+CFLAGS = -std=c11 -Wall -ggdb3
 EXEC = chess
-INCFLAGS = -I/includes
+INCFLAGS = -I ./includes/
 LIBFLAGS = -lSDL2 -lSDL2main
+OBJ= 2players.o chess.o Jeu.o List.o ListArray.o board.o input.o pieces.o 
 
+.PHONY : all $(OBJ) $(EXEC) clean clean_OBJ
 
-all : game graphics OBJ install 
+all : $(EXEC)
 
-graphics :
-	cd graphics && make
+2players.o : game/2players.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
 
-game : 
-	cd game && make
+chess.o : game/chess.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
 
-OBJ: 
-	cd OBJ && touch * && make
+Jeu.o : game/Jeu.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
+	
+List.o : game/List.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
 
-install:
-	cd OBJ && mv chess  ../
+ListArray.o : game/ListArray.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
 
-clean :	clean_graphics clean_OBJ clean_game
+board.o : graphics/board.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
+
+input.o : graphics/input.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
+
+pieces.o : graphics/pieces.c 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c $< $(LIBFLAGS)
+
+mvo :
+	mv *.o OBJ
+
+$(EXEC): $(OBJ) mvo
+	$(CC) $(CFLAGS) $(INCFLAGS) -o $@  OBJ/*.o $(LIBFLAGS)
+
+clean :	clean_OBJ 
 	rm -f $(EXEC)
-	 
-clean_graphics :
-	cd graphics && make clean
-
-clean_game :
-	cd game && make clean
 
 clean_OBJ :
-	cd OBJ && make clean
-
-.PHONY :all graphics game OBJ
+	rm -f OBJ/*.O
 

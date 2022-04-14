@@ -47,7 +47,7 @@ int main(int argc, char **argv)
         Two_Players(window,renderer);
     if(sel==3)
         printf("On quitte le jeu");
-
+        
     //Destruction de la fenêtre et du rendu
     Detruire_fenetre(&window,&renderer);
     SDL_Quit();
